@@ -1,0 +1,377 @@
+import java.sql.*;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+public final class BookJFrame extends javax.swing.JFrame {
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(StudentJFrame.class.getName());
+
+    
+    public BookJFrame() {
+        initComponents();
+        Connect();
+        BookData();
+    }
+    
+    Connection con;
+    PreparedStatement pst;
+    
+    public void Connect(){
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/librarydb","root","");
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.getLogger(BookJFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        
+        
+        
+        
+    
+    }
+    
+    private void BookData(){
+        
+        try {
+            int QQ;
+            pst = con.prepareStatement("SELECT * FROM Book");
+            ResultSet Rs = pst.executeQuery();
+            
+            ResultSetMetaData RSMD = Rs.getMetaData();
+
+            QQ = RSMD.getColumnCount();
+            
+            DefaultTableModel DFG =(DefaultTableModel)table1.getModel(); 
+            
+            DFG.setRowCount(0);
+             
+            while(Rs.next()){
+        
+            Vector v2 = new Vector();
+             
+            for(int aa=1; aa<=QQ; aa++){
+                 
+                v2.add(Rs.getString("bookid"));
+                v2.add(Rs.getString("bookname"));
+                v2.add(Rs.getString("author"));
+                v2.add(Rs.getString("publisher"));
+             }
+             
+             DFG.addRow(v2);
+        
+        }
+        } catch (SQLException ex) {
+            System.getLogger(BookJFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+
+   
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        btnclose = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtbookid = new javax.swing.JTextField();
+        txtbookname = new javax.swing.JTextField();
+        txtauthor = new javax.swing.JTextField();
+        txtpublisher = new javax.swing.JTextField();
+        btninsert = new javax.swing.JButton();
+        btnupdate = new javax.swing.JButton();
+        btndelete = new javax.swing.JButton();
+        btntotal = new javax.swing.JButton();
+        txtsum2 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(842, 550));
+        setMinimumSize(new java.awt.Dimension(842, 550));
+        setPreferredSize(new java.awt.Dimension(842, 550));
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel1.setFont(new java.awt.Font("Algerian", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Book");
+
+        btnclose.setBackground(new java.awt.Color(0, 0, 0));
+        btnclose.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        btnclose.setForeground(new java.awt.Color(255, 255, 255));
+        btnclose.setText("Close");
+        btnclose.addActionListener(this::btncloseActionPerformed);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 649, Short.MAX_VALUE)
+                .addComponent(btnclose)
+                .addGap(17, 17, 17))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnclose))
+                .addGap(8, 8, 8))
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        table1.setBackground(new java.awt.Color(0, 0, 0));
+        table1.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        table1.setForeground(new java.awt.Color(255, 255, 255));
+        table1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "BookID", "Book Name", "Author", "Publisher"
+            }
+        ));
+        table1.setGridColor(new java.awt.Color(255, 255, 255));
+        table1.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        table1.setSelectionForeground(new java.awt.Color(9, 9, 9));
+        jScrollPane1.setViewportView(table1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 810, 110));
+
+        jLabel2.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Book ID");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 73, -1));
+
+        jLabel3.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Book Name");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 82, -1));
+
+        jLabel4.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Author");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Publisher");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, -1, -1));
+
+        txtbookid.setBackground(new java.awt.Color(0, 0, 0));
+        txtbookid.setForeground(new java.awt.Color(255, 255, 255));
+        txtbookid.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtbookid.setSelectionColor(new java.awt.Color(255, 255, 255));
+        getContentPane().add(txtbookid, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 168, -1));
+
+        txtbookname.setBackground(new java.awt.Color(0, 0, 0));
+        txtbookname.setForeground(new java.awt.Color(255, 255, 255));
+        txtbookname.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtbookname.setSelectionColor(new java.awt.Color(255, 255, 255));
+        getContentPane().add(txtbookname, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 168, -1));
+
+        txtauthor.setBackground(new java.awt.Color(0, 0, 0));
+        txtauthor.setForeground(new java.awt.Color(255, 255, 255));
+        txtauthor.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtauthor.setSelectionColor(new java.awt.Color(255, 255, 255));
+        txtauthor.addActionListener(this::txtauthorActionPerformed);
+        getContentPane().add(txtauthor, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 168, -1));
+
+        txtpublisher.setBackground(new java.awt.Color(0, 0, 0));
+        txtpublisher.setForeground(new java.awt.Color(255, 255, 255));
+        txtpublisher.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtpublisher.setSelectionColor(new java.awt.Color(255, 255, 255));
+        getContentPane().add(txtpublisher, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 168, -1));
+
+        btninsert.setBackground(new java.awt.Color(0, 0, 0));
+        btninsert.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        btninsert.setForeground(new java.awt.Color(255, 255, 255));
+        btninsert.setText("Insert");
+        btninsert.addActionListener(this::btninsertActionPerformed);
+        getContentPane().add(btninsert, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
+
+        btnupdate.setBackground(new java.awt.Color(0, 0, 0));
+        btnupdate.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        btnupdate.setForeground(new java.awt.Color(255, 255, 255));
+        btnupdate.setText("Update");
+        btnupdate.addActionListener(this::btnupdateActionPerformed);
+        getContentPane().add(btnupdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, -1, -1));
+
+        btndelete.setBackground(new java.awt.Color(0, 0, 0));
+        btndelete.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        btndelete.setForeground(new java.awt.Color(255, 255, 255));
+        btndelete.setText("Delete");
+        btndelete.addActionListener(this::btndeleteActionPerformed);
+        getContentPane().add(btndelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, -1, -1));
+
+        btntotal.setBackground(new java.awt.Color(0, 0, 0));
+        btntotal.setFont(new java.awt.Font("Gill Sans MT", 0, 12)); // NOI18N
+        btntotal.setForeground(new java.awt.Color(255, 255, 255));
+        btntotal.setText("Total Books");
+        btntotal.addActionListener(this::btntotalActionPerformed);
+        getContentPane().add(btntotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, -1, -1));
+
+        txtsum2.setBackground(new java.awt.Color(0, 0, 0));
+        txtsum2.setForeground(new java.awt.Color(255, 255, 255));
+        txtsum2.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtsum2.setSelectionColor(new java.awt.Color(255, 255, 255));
+        txtsum2.addActionListener(this::txtsum2ActionPerformed);
+        getContentPane().add(txtsum2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, 170, -1));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IMG_7349.JPEG"))); // NOI18N
+        jLabel6.setText("jLabel6");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 830, -1));
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtauthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtauthorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtauthorActionPerformed
+
+    private void btninsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninsertActionPerformed
+        try {
+            String bookid = txtbookid.getText();
+            String bookname = txtbookname.getText();
+            String author = txtauthor.getText();
+            String publisher = txtpublisher.getText();
+            
+            pst = con.prepareStatement("INSERT INTO book (bookid,bookname,author,publisher)VALUES(?,?,?,?)");
+            
+            pst.setString(1,bookid);
+            pst.setString(2,bookname);
+            pst.setString(3,author);
+            pst.setString(4,publisher);
+            
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Record Updated Successfully");
+            BookData();
+        } catch (SQLException ex) {
+            System.getLogger(BookJFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_btninsertActionPerformed
+
+    private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
+        try {
+            String bookid = txtbookid.getText();
+            String bookname = txtbookname.getText();
+            String author = txtauthor.getText();
+            String publisher = txtpublisher.getText();
+            
+            pst = con.prepareStatement("update book set bookname= ?,author= ?,publisher= ? where bookid= ?");
+            
+            
+            pst.setString(1,bookname);
+            pst.setString(2,author);
+            pst.setString(3,publisher);
+            pst.setString(4,bookid);
+            
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Record Updated Successfully");
+            BookData();
+        } catch (SQLException ex) {
+            System.getLogger(BookJFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_btnupdateActionPerformed
+
+    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
+        try {
+            String bookid = txtbookid.getText();
+            pst=con.prepareStatement("DELETE FROM book WHERE bookid=?");
+            pst.setString(1,bookid);
+            
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Record Deleted Successfully");
+            BookData();
+        } catch (SQLException ex) {
+            System.getLogger(BookJFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_btndeleteActionPerformed
+
+    private void btncloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncloseActionPerformed
+        dispose();
+    }//GEN-LAST:event_btncloseActionPerformed
+
+    private void btntotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntotalActionPerformed
+        try {
+            String sql="select count(bookname) from book";
+            pst=con.prepareStatement(sql);
+            ResultSet Rs = pst.executeQuery();
+            if(Rs.next()){
+                String sum=Rs.getString("count(bookname)");
+                txtsum2.setText(sum);
+            }
+        
+        } catch (SQLException ex) {
+            System.getLogger(BookJFrame.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_btntotalActionPerformed
+
+    private void txtsum2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsum2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtsum2ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new BookJFrame().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnclose;
+    private javax.swing.JButton btndelete;
+    private javax.swing.JButton btninsert;
+    private javax.swing.JButton btntotal;
+    private javax.swing.JButton btnupdate;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table1;
+    private javax.swing.JTextField txtauthor;
+    private javax.swing.JTextField txtbookid;
+    private javax.swing.JTextField txtbookname;
+    private javax.swing.JTextField txtpublisher;
+    private javax.swing.JTextField txtsum2;
+    // End of variables declaration//GEN-END:variables
+}
